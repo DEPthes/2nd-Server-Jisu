@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-// @Table(name = "USER") -> 데이터베이스에 Member가 아니라 User 테이블이 있다면
+// @Table(name = "USER") -> 데이터베이스에 있는 USER 테이블 지정
 public class Member {
 
     @Id
