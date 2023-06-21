@@ -15,15 +15,21 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();   // 트랜잭션 얻어오기
         tx.begin();                                   // 트랜잭션 시작
 
-        Member member = new Member();
-        member.setId(1L);
-        member.setName("HelloA");
+        // 예외처리
+        try {
+            Member member = new Member();
+            member.setId(1L);
+            member.setName("HelloA");
 
-        em.persist(member);
+            em.persist(member);
 
-        tx.commit();                                  // 트랜잭션 커밋
+            tx.commit();                              // 트랜잭션 커밋
+        } catch(Exception e) {
+            tx.rollback();                              // 트랜잭션 롤백
+        } finally {
+            em.close();
+        }
 
-        em.close();
         // 애플리케이션이 완전히 종료되면 EntityMangerFactory close
         emf.close();
     }
