@@ -18,8 +18,9 @@ public class JpaMain {
         // 예외처리
         try {
             Member findMember = em.find(Member.class, 1L);
-            System.out.println("findMember.id = " + findMember.getId());
-            System.out.println("findMember.name = " + findMember.getName());
+            findMember.setName("HelloJPA");
+
+            // em.persist(findMember); -> 저장하지 않아도 됨
 
             tx.commit();                              // 트랜잭션 커밋
         } catch(Exception e) {
