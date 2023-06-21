@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] arg) {
@@ -17,10 +18,16 @@ public class JpaMain {
 
         // 예외처리
         try {
-            Member findMember = em.find(Member.class, 1L);
-            findMember.setName("HelloJPA");
+            // Member findMember = em.find(Member.class, 1L)
+            // JPQL - Member에 저장된 모든 회원 조회
+            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+                    .setFirstResult(5)
+                    .setMaxResults(8)
+                    .getResultList();
 
-            // em.persist(findMember); -> 저장하지 않아도 됨
+            for(Member member : result){
+                System.out.println("member.name = " + member.getName());
+            }
 
             tx.commit();                              // 트랜잭션 커밋
         } catch(Exception e) {
