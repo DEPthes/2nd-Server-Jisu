@@ -1,11 +1,10 @@
 package com.example.studyboard.user.controller;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     // 회원가입
@@ -14,6 +13,7 @@ public class UserController {
 
     // (ROLE: ADMIN) 게시글 삭제
 
+    // (공통)
     // 내 정보 조회
     // 내 정보 수정
     // 내가 쓴 게시글 확인

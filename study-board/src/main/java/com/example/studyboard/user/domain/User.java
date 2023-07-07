@@ -19,7 +19,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
@@ -29,13 +29,16 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String displayName;
+
     @OneToMany(mappedBy = "user")
     private List<UserBoard> userBoards = new ArrayList<>();
 
     @Builder
-    User(String username, String password, Role role) {
+    User(String username, String password, Role role, String displayName) {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.displayName = displayName;
     }
 }
