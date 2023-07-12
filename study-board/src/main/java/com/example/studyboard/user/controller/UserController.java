@@ -1,9 +1,7 @@
 package com.example.studyboard.user.controller;
 
-import com.example.studyboard.user.dto.CheckUsernameRequest;
-import com.example.studyboard.user.dto.CheckUsernameResponse;
-import com.example.studyboard.user.dto.CreateUserRequest;
-import com.example.studyboard.user.dto.UpdateUserDto;
+import com.example.studyboard.user.domain.User;
+import com.example.studyboard.user.dto.*;
 import com.example.studyboard.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +35,11 @@ public class UserController {
 
     // (공통)
     // 내 정보 조회
+    @GetMapping("/info")
+    public UserInfoDto getMyInfo(User user) {
+        return userService.getMyInfo(user);
+    }
+
     // 내 정보 수정
     @PutMapping("/info")
     public void updateUserInfo(String username, @RequestBody UpdateUserDto updateUserDto) {
