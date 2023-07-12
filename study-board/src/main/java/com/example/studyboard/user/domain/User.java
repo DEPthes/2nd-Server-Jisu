@@ -1,6 +1,6 @@
 package com.example.studyboard.user.domain;
 
-import com.example.studyboard.userboard.domain.UserBoard;
+import com.example.studyboard.board.domain.Board;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,10 +29,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(nullable = false, unique = true)
     private String displayName;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserBoard> userBoards = new ArrayList<>();
+    @ManyToMany(mappedBy = "user")
+    private List<Board> Boards = new ArrayList<>();
 
     @Builder
     User(String username, String password, Role role, String displayName) {
@@ -41,4 +42,6 @@ public class User {
         this.role = role;
         this.displayName = displayName;
     }
+
+    public void updateDisplayName(String displayName) { this.displayName = displayName; }
 }

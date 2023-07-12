@@ -1,6 +1,6 @@
 package com.example.studyboard.board.domain;
 
-import com.example.studyboard.userboard.domain.UserBoard;
+import com.example.studyboard.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -29,8 +29,8 @@ public class Board {
     @Column(nullable = false)
     private LocalDateTime creationDate;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private List<UserBoard> userBoards = new ArrayList<>();
+    @ManyToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<User> users = new ArrayList<>();
 
     @Builder
     Board(String title, String contents, LocalDateTime creationDate) {
