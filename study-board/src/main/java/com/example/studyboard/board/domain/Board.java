@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,10 +28,8 @@ public class Board {
     private String contents;
 
     @Column(nullable = false)
+    @CreatedDate
     private LocalDateTime creationDate;
-
-    @ManyToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private List<User> users = new ArrayList<>();
 
     @Builder
     Board(String title, String contents, LocalDateTime creationDate) {

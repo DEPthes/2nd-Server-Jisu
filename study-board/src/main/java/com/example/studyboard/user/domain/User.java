@@ -29,11 +29,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
 
-    @ManyToMany(mappedBy = "user")
-    private List<Board> Boards = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Board> boards = new ArrayList<>();
 
     @Builder
     User(String userId, String password, Role role, String username) {
@@ -44,4 +44,5 @@ public class User {
     }
 
     public void updateUsername(String username) { this.username = username; }
+
 }
