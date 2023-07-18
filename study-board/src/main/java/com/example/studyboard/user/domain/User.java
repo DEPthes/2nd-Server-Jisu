@@ -20,7 +20,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username;
+    private String userId;
 
     @Column(nullable = false)
     private String password;
@@ -30,18 +30,18 @@ public class User {
     private Role role;
 
     @Column(nullable = false, unique = true)
-    private String displayName;
+    private String username;
 
     @ManyToMany(mappedBy = "user")
     private List<Board> Boards = new ArrayList<>();
 
     @Builder
-    User(String username, String password, Role role, String displayName) {
-        this.username = username;
+    User(String userId, String password, Role role, String username) {
+        this.userId = userId;
         this.password = password;
         this.role = role;
-        this.displayName = displayName;
+        this.username = username;
     }
 
-    public void updateDisplayName(String displayName) { this.displayName = displayName; }
+    public void updateUsername(String username) { this.username = username; }
 }

@@ -4,8 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class CheckUsernameRequest {
+public class CheckUserIdRequest {
 
     @NotBlank
-    private String username;
+    private String userId;
 }

@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -17,33 +17,39 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     // 회원가입
-    @PostMapping("/sign")
+    @PostMapping("/user/sign")
     public void sign(@RequestBody @Valid CreateUserRequest createUserRequest) {
         userService.sign(createUserRequest.newUser(passwordEncoder));
     }
 
     // 로그인
-    // 아이디 중복체크
-    @PostMapping("/check-id")
-    public CheckUsernameResponse checkId(@RequestBody CheckUsernameRequest checkUsernameRequest) {
+    @PostMapping("/auth/login")
+    public LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {
+        return userService.login(loginRequest);
+    }
 
-        boolean isNotDuplicated = userService.checkUsername(checkUsernameRequest.getUsername());
-        return new CheckUsernameResponse(isNotDuplicated);
+    // 아이디 중복체크
+    @PostMapping("/user/check-id")
+    public CheckUserIdResponse checkId(@RequestBody CheckUserIdRequest checkUserIdRequest) {
+
+        boolean isNotDuplicated = userService.checkUserId(checkUserIdRequest.getUserId());
+        return new CheckUserIdResponse(isNotDuplicated);
     }
 
     // (ROLE: ADMIN) 게시글 삭제
+    // 관리자 게시글 상단고정?
 
     // (공통)
     // 내 정보 조회
-    @GetMapping("/info")
+    @GetMapping("/user/info")
     public UserInfoDto getMyInfo(User user) {
         return userService.getMyInfo(user);
     }
 
     // 내 정보 수정
-    @PutMapping("/info")
-    public void updateUserInfo(String username, @RequestBody UpdateUserDto updateUserDto) {
-        userService.updateUserInfo(username, updateUserDto);
+    @PutMapping("/user/info")
+    public void updateUserInfo(String userId, @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUserInfo(userId, updateUserDto);
     }
 
     // 내가 쓴 게시글 확인

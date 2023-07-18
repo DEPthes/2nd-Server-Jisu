@@ -10,21 +10,21 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class CreateUserRequest {
 
     @NotBlank
-    private String username;
+    private String userId;
 
     @NotBlank
     private String password;
 
-    private String displayName;
+    private String username;
 
     @NotBlank
     private String role;
 
     public User newUser(PasswordEncoder passwordEncoder) {
         return User.builder()
-                .username(username)
+                .userId(userId)
                 .password(passwordEncoder.encode(password))
-                .displayName(displayName)
+                .username(username)
                 .role(Role.USER)
                 .build();
     }

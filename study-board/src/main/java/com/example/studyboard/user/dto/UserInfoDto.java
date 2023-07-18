@@ -6,14 +6,14 @@ import lombok.Builder;
 
 public class UserInfoDto {
 
+    private final String userId;
     private final String username;
-    private final String displayName;
     private final Role role;
 
     @Builder
     public UserInfoDto(User user){
+        this.userId = user.getUserId();
         this.username = user.getUsername();
-        this.displayName = user.getDisplayName();
         this.role = user.getRole();
     }
 }
