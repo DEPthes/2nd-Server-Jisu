@@ -15,10 +15,8 @@ public class CreateUserRequest {
     @NotBlank
     private String password;
 
-    private String username;
-
     @NotBlank
-    private String role;
+    private String username;
 
     public User newUser(PasswordEncoder passwordEncoder) {
         return User.builder()
