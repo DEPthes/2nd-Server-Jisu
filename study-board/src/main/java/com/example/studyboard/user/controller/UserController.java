@@ -1,6 +1,7 @@
 package com.example.studyboard.user.controller;
 
 import com.example.studyboard.auth.jwt.JwtTokenProvider;
+import com.example.studyboard.board.dto.BoardDto;
 import com.example.studyboard.user.domain.User;
 import com.example.studyboard.user.dto.*;
 import com.example.studyboard.user.service.UserService;
@@ -8,6 +9,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -59,7 +62,13 @@ public class UserController {
     }
 
     // 내가 쓴 게시글 확인
+    @GetMapping("/info/my-boards")
+    public List<BoardDto> getMyBoards(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = extractTokenFromHeader(authorizationHeader);
+        String userId = jwtProvider.extractUserId(token);
 
-    // 비밀번호 변경
+        List<BoardDto> myBoards = userService.getMyBoards(userId);
+        return myBoards;
+    }
 
 }

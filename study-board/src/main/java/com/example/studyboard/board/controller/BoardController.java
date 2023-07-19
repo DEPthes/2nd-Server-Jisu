@@ -1,13 +1,11 @@
 package com.example.studyboard.board.controller;
 
 import com.example.studyboard.auth.jwt.JwtTokenProvider;
-import com.example.studyboard.board.domain.Board;
 import com.example.studyboard.board.dto.BoardDto;
 import com.example.studyboard.board.dto.CreateBoardDto;
 import com.example.studyboard.board.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +42,6 @@ public class BoardController {
 
     // 게시글 상세 조회
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     public BoardDto getBoardDetails(@PathVariable Long id) {
         return boardService.getBoardDetails(id);
     }

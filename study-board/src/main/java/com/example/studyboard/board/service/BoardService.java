@@ -34,16 +34,17 @@ public class BoardService {
         return boardRepository.save(newBoard);
     }
 
+    // 전체 게시글 목록 조회
     public List<BoardDto> viewAllBoard() {
         List<Board> allBoards = boardRepository.findAll();
         return allBoards.stream()
-                .map(BoardDto::new) // Board 엔티티를 BoardDto로 변환
+                .map(BoardDto::new)
                 .collect(Collectors.toList());
     }
 
     public BoardDto getBoardDetails(Long boardId) {
         Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new IllegalArgumentException("Board not found"));
+                .orElseThrow(() -> new IllegalArgumentException(""));
 
         return new BoardDto(board);
     }
