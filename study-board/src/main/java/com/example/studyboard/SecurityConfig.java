@@ -34,7 +34,8 @@ public class SecurityConfig {
                 .requestMatchers(
                         API_PREFIX + "/user/sign",
                         API_PREFIX + "/auth/login",
-                        API_PREFIX + "/user/check-id"
+                        API_PREFIX + "/user/check-id",
+                        API_PREFIX + "/board"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and()
