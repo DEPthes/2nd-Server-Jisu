@@ -28,14 +28,20 @@ public class Board {
     private String contents;
 
     @Column(nullable = false)
-    @CreatedDate
     private LocalDateTime creationDate;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private User user;
+
     @Builder
-    Board(String title, String contents, LocalDateTime creationDate) {
+    Board(String title, String contents, LocalDateTime creationDate, User user) {
         this.title = title;
         this.contents = contents;
         this.creationDate = creationDate;
+        this.user = user;
     }
 
+    public void setUser(User user) {
+    }
 }

@@ -32,7 +32,7 @@ public class User {
     @Column(nullable = false)
     private String username;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Board> boards = new ArrayList<>();
 
     @Builder
