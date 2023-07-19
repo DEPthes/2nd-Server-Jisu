@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 public class LoginResponse {
     private String tokenType;
     private String accessToken;
-    private String username;
+    private String userId;
     private String role;
 
-    public LoginResponse(String tokenType, String accessToken, String username, String role) {
+    public LoginResponse(String tokenType, String accessToken, String userId, String role) {
         this.tokenType = tokenType;
         this.accessToken = accessToken;
-        this.username = username;
+        this.userId = userId;
         this.role = role;
     }
 }

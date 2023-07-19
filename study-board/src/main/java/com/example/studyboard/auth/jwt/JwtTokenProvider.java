@@ -30,6 +30,11 @@ public class JwtTokenProvider {
                 .sign(Algorithm.HMAC512(secret));
     }
 
+    public String extractUserId(String token) {
+        DecodedJWT decodedJWT = JWT.decode(token);
+        return decodedJWT.getClaim("userId").asString();
+    }
+
     public DecodedJWT verify(String token){
         return JWT.require(Algorithm.HMAC512(secret)).build().verify(token);
     }

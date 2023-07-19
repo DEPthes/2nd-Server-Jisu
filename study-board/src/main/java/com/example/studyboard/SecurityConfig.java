@@ -24,9 +24,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private static final String API_PREFIX = "/api";
-    private final UserService userService;
-    private final JwtTokenProvider jwtProvider;
     private final CorsConfigurationSource corsConfigurationSource;
+    private final JwtTokenProvider jwtProvider;
+    private final UserService userService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -63,7 +63,6 @@ public class SecurityConfig {
     public JwtAuthFilter jwtAuthFilter() {
         return new JwtAuthFilter(jwtProvider, userService);
     }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

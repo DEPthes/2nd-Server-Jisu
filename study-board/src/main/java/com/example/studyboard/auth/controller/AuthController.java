@@ -3,7 +3,7 @@ package com.example.studyboard.auth.controller;
 import com.example.studyboard.auth.dto.LoginRequest;
 import com.example.studyboard.auth.dto.LoginResponse;
 import com.example.studyboard.auth.service.AuthService;
-import com.example.studyboard.user.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody @Valid LoginRequest loginRequest) {
-        return authService.login(loginRequest);
+    public LoginResponse login(@RequestBody @Valid LoginRequest loginRequest, HttpServletResponse response) {
+        return authService.login(loginRequest, response);
     }
 }
