@@ -1,11 +1,12 @@
 package com.example.studyboard.board.domain;
 
-import com.example.studyboard.userboard.domain.UserBoard;
+import com.example.studyboard.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,14 +30,18 @@ public class Board {
     @Column(nullable = false)
     private LocalDateTime creationDate;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-    private List<UserBoard> userBoards = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private User user;
 
     @Builder
-    Board(String title, String contents, LocalDateTime creationDate) {
+    Board(String title, String contents, LocalDateTime creationDate, User user) {
         this.title = title;
         this.contents = contents;
         this.creationDate = creationDate;
+        this.user = user;
     }
 
+    public void setUser(User user) {
+    }
 }
