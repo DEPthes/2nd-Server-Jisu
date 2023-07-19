@@ -1,7 +1,6 @@
 package com.example.studyboard.user.controller;
 
-import com.example.studyboard.auth.dto.LoginRequest;
-import com.example.studyboard.auth.dto.LoginResponse;
+import com.example.studyboard.auth.jwt.JwtTokenProvider;
 import com.example.studyboard.user.domain.User;
 import com.example.studyboard.user.dto.*;
 import com.example.studyboard.user.service.UserService;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final JwtTokenProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
 
     // 회원가입
@@ -29,23 +29,33 @@ public class UserController {
     public CheckUserIdResponse checkId(@RequestBody CheckUserIdRequest checkUserIdRequest) {
 
         boolean isNotDuplicated = userService.checkUserId(checkUserIdRequest.getUserId());
-        return new CheckUserIdResponse(isNotDuplicated);
+        return new CheckUserIdResponse(isNotDuplicated); // true: 사용가능
     }
 
     // (ROLE: ADMIN) 게시글 삭제
     // 관리자 게시글 상단고정?
 
-    // (공통)
     // 내 정보 조회
     @GetMapping("/info")
-    public UserInfoDto getMyInfo(User user) {
-        return userService.getMyInfo(user);
+    public UserInfoDto getMyInfo(@RequestHeader("Authorization") String authorizationHeader) {
+        String token = extractTokenFromHeader(authorizationHeader);
+        String userId = jwtProvider.extractUserId(token);
+        return userService.getMyInfo(userId);
     }
 
+    private String extractTokenFromHeader(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7);
+        }
+        throw new IllegalArgumentException("Invalid authorization header");
+    }
     // 내 정보 수정
     @PutMapping("/info")
-    public void updateUserInfo(String userId, @RequestBody UpdateUserDto updateUserDto) {
-        userService.updateUserInfo(userId, updateUserDto);
+    public void updateUserInfo(@RequestHeader("Authorization") String authorizationHeader, @RequestBody UpdateUserDto updateUserDto) {
+        String token = extractTokenFromHeader(authorizationHeader);
+        String userId = jwtProvider.extractUserId(token);
+        User user = userService.findByUserId(userId);
+        userService.updateUserInfo(user, updateUserDto);
     }
 
     // 내가 쓴 게시글 확인

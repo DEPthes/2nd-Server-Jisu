@@ -22,17 +22,14 @@ public class UserService {
         return userRepository.findByUserId(userId).isEmpty();
     }
 
-    public UserInfoDto getMyInfo(User user) {
-        String userId = user.getUserId();
+    public UserInfoDto getMyInfo(String userId) {
         User newUser = userRepository.findByUserId(userId)
-                .orElseThrow(()-> new IllegalArgumentException(""));
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         return new UserInfoDto(newUser);
     }
 
-    public void updateUserInfo(String userId, UpdateUserDto updateUserDto) {
-        User user = userRepository.findByUserId(userId)
-                .orElseThrow(()-> new IllegalArgumentException(""));
+    public void updateUserInfo(User user, UpdateUserDto updateUserDto) {
         updateUserDto.username().ifPresent(user::updateUsername);
     }
 
