@@ -23,8 +23,10 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/sign")
-    public void sign(@RequestBody @Valid CreateUserRequest createUserRequest) {
+    public String sign(@RequestBody @Valid CreateUserRequest createUserRequest) {
         userService.sign(createUserRequest.newUser(passwordEncoder));
+
+        return "redirect:/LoginPage";
     }
 
     // 아이디 중복체크
